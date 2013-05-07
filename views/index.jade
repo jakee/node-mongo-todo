@@ -1,4 +1,15 @@
 extend layout
 
+block head
+  script(src="/js/app.js", type="text/javascript")
+
 block content
-  p Hello index page!
+  .todos
+    each todo in todos
+      .todo
+        h1 todo.title
+        p todo.task
+  form.create-todo
+    input(type="text",name="title",class="title",placeholder="What to do?")
+    textarea(name="task",class="task",placeholder="How to do it?",rows="5", cols="20")
+    button(name="create",class="create") Create the task!
