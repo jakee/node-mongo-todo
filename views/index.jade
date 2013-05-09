@@ -1,14 +1,10 @@
 extend layout
 
 block head
-  script(src="/js/app.js", type="text/javascript")
+  script(src="/js/main.js", type="text/javascript")
 
 block content
   .todos
-    each todo in todos
-      .todo
-        h1 todo.title
-        p todo.task
   form.create-todo
     input(type="text",name="title",class="title",placeholder="What to do?")
     textarea(name="task",class="task",placeholder="How to do it?",rows="5", cols="20")
