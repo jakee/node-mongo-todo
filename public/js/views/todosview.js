@@ -3,42 +3,90 @@ define([
   'underscore',
   'backbone',
   'todos',
-  'hbs!/templates/todo'
-], function($, _, Backbone, collections, todoTemplate) {
+  'hbs!/templates/todoslistview',
+  'hbs!/templates/todolistitem'
+], function($, _, Backbone, collections, todosListTemplate, todoTemplate) {
 
-  var todos = new collections.Todos();
+  var todos = collections.todos;
 
-  var TodosView = Backbone.View.extend({
+  var TodosListView = Backbone.View.extend({
+
+    events: {
+      "click .add": "newTodo",
+      "click .important": "sortTodos",
+      "click .urgent": "sortTodos"
+    },
 
     initialize: function() {
+      console.log('initialize');
       _.bindAll(this);
-      this.listenTo(todos, 'reset', this.render);
+      this.registerEvents();
       todos.fetch();
+      this.$el.html(todosListTemplate());
+      this.$list = this.$el.find('.list');
     },
 
     render: function() {
-      this.todos.each(function(todo) {
-        var view = new TodoView({ model: todo });
-        this.$el.append(view.render().el);
+      this.$list.empty();
+      console.log('render');
+      todos.each(function(todo) {
+        console.log('todo');
+        var view = new TodoListItemView({ model: todo });
+        this.$list.append(view.render().el);
       }, this);
       return this;
+    },
+
+    show: function() {
+      this.registerEvents();
+      this.render();
+      this.$el.show();
+    },
+
+    hide: function() {
+      this.stopListening();
+      this.$el.hide();
+    },
+
+    newTodo: function() {
+      Backbone.trigger('todos:new');
+    },
+
+    sortTodos: function(e) {
+      var sortBy = $(e.target).attr('name');
+      // sort todos
+    },
+
+    registerEvents: function() {
+      this.listenTo(todos, 'sync', this.render);
     }
 
   });
 
-  var TodoView = Backbone.View.extend({
+  var TodoListItemView = Backbone.View.extend({
 
-    className: 'todo', 
+    tagName: 'section',
+    className: 'todo',
+
+    events: {
+      "click": "open"
+    },
 
     initialize: function() {
       _.bindAll(this);
     },
 
     render: function() {
+      this.$el.empty();
       this.$el.html(todoTemplate(this.model.toJSON()));
+      return this;
+    },
+
+    open: function() {
+      Backbone.trigger('todos:open', this.model);
     }
 
   });
 
-  return TodosView;
+  return TodosListView;
 });

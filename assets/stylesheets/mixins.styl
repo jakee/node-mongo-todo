@@ -1,0 +1,27 @@
+/* Functions */
+
+tile-background()
+  background url(arguments) 0 0 repeat
+
+rounded()
+  -moz-border-radius arguments
+  -webkit-border-radius arguments
+  border-radius arguments
+
+shadow()
+  -moz-box-shadow arguments
+  -webkit-box-shadow arguments
+  box-shadow arguments
+
+tilt()
+  -moz-transform rotate(arguments)
+  -webkit-transform rotate(arguments)
+  -o-transform rotate(arguments)
+  -ms-transform rotate(arguments)
+  /* remove jagged edges in chrome */
+  -webkit-backface-visibility hidden
+
+/* Mixins */
+
+lined-paper-background()
+  tile-background "/img/linedpaper.png"

@@ -1,2 +1,7 @@
-h2 {{ title }}
-p {{ task }}
+nav
+  button.save(type="button", name="add") Save
+  button.cancel(type="button", name="priority") Cancel
+  button.delete(type="button", name="priority") Delete
+form.edit
+  input.title(type="text", name="title", placeholder="What needs to be done?", value="{{ title }}")
+  textarea.task(name="task", placeholder="How to do it?") {{ task }}

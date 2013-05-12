@@ -1,2 +1,90 @@
+@import 'variables'
+@import 'mixins'
+
 body
-  background lightgray
+  font-family "Helvetica Neue", Helvetica, Arial, sans-serif
+  background-color vanilla
+  color chocolate
+
+h1, h2, h3, h4, h5, h6
+input
+  font-family "Lucida Bright", Georgia, serif
+
+h1
+  font-size 2em
+
+h2, input
+  font-size 1.5em
+
+h3
+  font-size 1.3em
+
+p, button, textarea
+  font-size 1em
+
+header
+  position absolute
+  top 0
+  right 0
+  left 0
+  height 5em
+
+  background-color sageGreen
+
+  h1
+    text-align center
+
+.app
+  position relative
+  top 5em
+  width 500px
+  margin 0 auto
+
+nav
+  text-align center
+
+  button
+    border none
+    margin 0 5px
+    padding 10px
+    color darkGrey
+    background-color sageGreen
+
+    rounded 5px
+    shadow 0px 10px 20px darkGrey
+
+    &:hover
+      color darkGreen
+      cursor pointer
+      shadow 0px 10px 20px darkGreen
+
+    &:active
+      opacity 0.5
+
+
+.todo
+  width 100%
+  padding 10px
+  margin-top 20px
+  box-sizing border-box
+
+  lined-paper-background()
+  shadow 0px 10px 20px #444
+
+  cursor pointer
+
+  &:hover
+    tilt 2deg
+
+  form, input, textarea
+    display block
+    width 480px
+
+  textarea
+    resize none
+
+  .message
+    width 100%
+    height 1.2em
+    text-align center
+
