@@ -4,6 +4,7 @@ define([
 ], function(_, Backbone) {
 
   var Todo = Backbone.Model.extend({
+    idAttribute: "_id",
     defaults: {
       title: "",
       task: ""
@@ -20,7 +21,6 @@ define([
 
   var Todos = Backbone.Collection.extend({
     url: "/todos",
-    idAttribute: "_id",
     model: Todo
   });
 

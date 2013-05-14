@@ -18,7 +18,6 @@ define([
     },
 
     initialize: function() {
-      console.log('initialize');
       _.bindAll(this);
       this.registerEvents();
       todos.fetch();
@@ -28,9 +27,8 @@ define([
 
     render: function() {
       this.$list.empty();
-      console.log('render');
+      console.log('render todos');
       todos.each(function(todo) {
-        console.log('todo');
         var view = new TodoListItemView({ model: todo });
         this.$list.append(view.render().el);
       }, this);

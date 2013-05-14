@@ -14,6 +14,7 @@ define([
     id: 'todo',
 
     events: {
+      "input form": "updateModel",
       "click .save": "save",
       "click .cancel": "cancel",
       "click .delete": "delete"
@@ -27,7 +28,16 @@ define([
 
     render: function() {
       this.$el.html(todoEditTemplate(this.model.toJSON()));
+      this.$el.find('textarea').autoResize().trigger('change.dynSiz');
+      this.delegateEvents();
       return this;
+    },
+
+    updateModel: function(event) {
+      var $source = $(event.target),
+          attr = $source.attr('name'),
+          val = $source.val();
+      this.model.set(attr, val, {validate: true});
     },
 
     registerEvents: function() {
@@ -36,18 +46,29 @@ define([
     },
 
     save: function() {
-      this.close();
+      if (this.model.isNew() || this.model.hasChanged()) {
+        this.model.save();
+      }
     },
 
     cancel: function() {
-      this.close();
+      if (this.model.isNew()) {
+        this.delete();
+      } else if (this.model.hasChanged()) {
+        this.model.fetch();
+      } else {
+        this.close();
+      }
+
     },
 
     delete: function() {
-      this.close();
+      console.log('delete');
+      this.model.destroy();
     },
 
     close: function() {
+      this.model = null;
       Backbone.trigger("todo:close");
     }
 
