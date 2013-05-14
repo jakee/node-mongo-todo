@@ -32,6 +32,7 @@ exports.addTodo = function(req, res) {
 exports.updateTodo = function(req, res) {
   var id = req.params.id;
   var todo = req.body;
+  delete todo._id;
   db.collection(collectionName, function(err, collection) {
       collection.update({'_id': new BSON.ObjectID(id)}, todo, {safe: true}, function(err, rs) {
         if (err) res.json(500, {'error': 'Error updating todo.'});
