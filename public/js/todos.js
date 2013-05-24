@@ -24,7 +24,5 @@ define([
     model: Todo
   });
 
-  return {
-    todos: new Todos()
-  };
+  return new Todos();
 });

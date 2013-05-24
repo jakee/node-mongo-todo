@@ -3,16 +3,14 @@ define([
   'underscore',
   'backbone',
   'todos',
+  'router',
   'hbs!/templates/todoslistview',
   'hbs!/templates/todolistitem'
-], function($, _, Backbone, collections, todosListTemplate, todoTemplate) {
-
-  var todos = collections.todos;
+], function($, _, Backbone, todos, Router,todosListTemplate, todoTemplate) {
 
   var TodosListView = Backbone.View.extend({
 
     events: {
-      "click .add": "newTodo",
       "click .important": "sortTodos",
       "click .urgent": "sortTodos"
     },
@@ -46,10 +44,6 @@ define([
       this.$el.hide();
     },
 
-    newTodo: function() {
-      Backbone.trigger('todos:new');
-    },
-
     sortTodos: function(e) {
       var sortBy = $(e.target).attr('name');
       // sort todos
@@ -81,7 +75,7 @@ define([
     },
 
     open: function() {
-      Backbone.trigger('todos:open', this.model);
+      Router.navigate('!/todos/' + this.model.id, {trigger: true});
     }
 
   });

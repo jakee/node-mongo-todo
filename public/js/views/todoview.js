@@ -3,10 +3,9 @@ define([
   'underscore',
   'backbone',
   'todos',
+  'router',
   'hbs!/templates/todo'
-], function($, _, Backbone, collections, todoEditTemplate) {
-
-  var todos = collections.todos;
+], function($, _, Backbone, todos, Router, todoEditTemplate) {
 
   var TodoEditView = Backbone.View.extend({
 
@@ -22,7 +21,7 @@ define([
 
     initialize: function() {
       _.bindAll(this);
-      this.model || (this.model = collections.todos.create());
+      this.model || (this.model = todos.create());
       this.registerEvents(); 
     },
 
@@ -42,7 +41,7 @@ define([
 
     registerEvents: function() {
       this.listenTo(this.model, 'error invalid', this.showMessage);
-      this.listenTo(this.model, 'sync', this.close);
+      this.listenTo(this.model, 'sync destroy', this.close);
     },
 
     save: function() {
@@ -59,7 +58,6 @@ define([
       } else {
         this.close();
       }
-
     },
 
     delete: function() {
@@ -69,7 +67,7 @@ define([
 
     close: function() {
       this.model = null;
-      Backbone.trigger("todo:close");
+      Router.navigate('!/todos', {trigger:true});
     }
 
   });
